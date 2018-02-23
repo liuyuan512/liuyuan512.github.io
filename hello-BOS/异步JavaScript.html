@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charSet='utf-8' />
+  <title>BOS开发教程 - hello,BOS</title>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700' rel='stylesheet' type='text/css'>
+  <link href='/css/docs.css' rel='stylesheet'>
+</head>
+<body>
+  <div class='menu'>
+    <div class='logo'>
+      Documentation
+    </div>
+    <nav class='menu-nav'>
+      
+    </nav>
+    <a class='footer' href='https://github.com/nodejh/hexo-documentation'>
+      Project on github
+    </a>
+  </div>
+  <div class='page'>
+    <div class='page-content'>
+      <h1>hello,BOS</h1>
+      <p>#异步JavaScript</p>
+<p>##1.概念</p>
+<ol>
+<li>Ajax的概念很简单，就是发出数据请求后，无需无休止的等待请求返回，你可以继续做别的事情，直到最后返回请求时再处理</li>
+<li>Ajax 是 Asynchronous JavaScript And XML的缩写，现在是异步请求数据的概念，无论是XML，JavaScript文件或者是REST API的Json，其实只是异步请求数据，然后在返回时在处理</li>
+<li><ul>
+<li><img src="http://p1z5x0ead.bkt.clouddn.com//%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%2015.30.11.png" alt="屏幕快照 2018-02-05 15.30.11"></li>
+<li><img src="http://p1z5x0ead.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%2015.32.00.png" alt="屏幕快照 2018-02-05 15.32.00"></li>
+</ul>
+</li>
+<li>发送Ajax请求<ol>
+<li>需要API秘钥</li>
+<li>使用Oauth</li>
+<li>不使用身份验证</li>
+</ol>
+</li>
+<li>返回的数据<ol>
+<li>XML,分层数据格式</li>
+<li>Json 大多数请求是AJAJ请求，表示异步JavaScript和Json请求</li>
+<li>HTML 嵌入在Ajax响应中的html，用于填充部分页面</li>
+</ol>
+</li>
+<li>历史背景<ul>
+<li>如今，我们要构建的是 JavaScript 框架和单页面应用，但是我们来看看发展历史。</li>
+<li>在传统的服务器渲染网络应用中，客户端计算机发出网页请求。服务器创建并向客户端返回网页。最后，客户端加载新的网页并显示信息。如果它们与网页互动，例如通过提交表格添加或删除某些内容，则从头循环。客户端将发出另一个请求，服务器返回全新的网页，客户端再次加载并向用户展示网页。</li>
+<li>在 2000 年代中期，这基本上是互联网通信的唯一方式。信息存储在服务器上，客户端请求该数据并刷新和显示网页。对于每个新的网页请求都会重复这一循环流程。</li>
+<li>在上世纪 90 年代末，Microsoft Outlook 团队向 Internet Explorer 添加了 XMLHTTP 组件，并构建了网络版 Outlook 邮箱客户端。之后，其他浏览器将这一代码利用并创建了 XMLHttpRequest。这使得浏览器能够从 Javascript 中发出 HTTP 请求，并更新当前网页，而不用再从服务器那获取整个网页。用户界面能够在用户的不断操作下异步更新，而不用同步地等待整个页面。交换的大部分数据都是 XML 格式。</li>
+<li>AJAX，在 2005 年，<a href="https://web.archive.org/web/20080702075113/http://www.adaptivepath.com/ideas/essays/archives/000385.php" target="_blank" rel="noopener">Jesse James Garrett 发明了 AJAX 一词</a>，表示“异步 Javascript 和 XML”。本质上就是使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest" target="_blank" rel="noopener">XMLHTTPRequest</a>，获取数据，然后修改当前网页。</li>
+<li>AJAX 瞬间在网络开发领域流行起来，并远远超出 Microsoft Outlook 的普及范围。最先进的网络应用（例如 Flickr、Gmail 和 Google 地图）都快速地采用了这一技术。这些新的即时应用不用等待数据更新再刷新整个网页，功能非常强大。</li>
+<li>浏览器之间的不一致性，但是，Ajax 并非十全十美。有多个不同的不兼容浏览器实现，开发者必须要为一个浏览器编写代码或为所有浏览器编写复杂的代码。最终，出现了 jQuery 和 YUI 等 JavaScript 库来应对这些差异。</li>
+<li>AJAX 应用很棒，但是单靠个别开发者很难编写出来，因为浏览器不断变化，用户希望应用能用在越来越多的设备上，代码就变得越来越复杂并令人困惑。这一挑战就促使标准 Javascript 框架和库的出现。一些 JavaScript 库能够隐藏复杂浏览器的差异，JavaScript 框架使得复杂、强大的应用开发过程易于管理。</li>
+</ul>
+</li>
+<li>API<ul>
+<li>获取数据<ul>
+<li>我们了解了 Ajax 概念，我们将利用该技术异步地向项目中添加数据。但是这些数据来自何处？如何获取该数据？我们的应用怎么知道如何获取该数据？</li>
+<li>我们将使用一个 API 与各种数据源交互。</li>
+</ul>
+</li>
+<li>什么是API<ul>
+<li>“API”由以下单词的首字母组成<ul>
+<li>Application（应用）</li>
+<li>Programming（程序）</li>
+<li>Interface （接口）</li>
+</ul>
+</li>
+<li>有一些数据有待使用。大部分包含大量数据的应用从第三方网站上获取数据。它们实际上使用 API 获取这些数据</li>
+<li><a href="https://developers.google.com/apis-explorer/#p/" target="_blank" rel="noopener">谷歌API</a></li>
+<li><a href="https://www.programmableweb.com/apis/directory" target="_blank" rel="noopener">API数据库</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>##2.Ajax与XHR</p>
+<ol>
+<li>使用XML创建异步请求<ul>
+<li>XHR对象由JavaScript环境提供，用于生成AJAX请求，手动设置请求，发送，发送后代码可以继续进行并进行其他操作，返回响应时，就可以用之前准备好怎么处理返回数据的程序去处理数据</li>
+</ul>
+</li>
+<li>XHR对象<ul>
+<li>就像 JavaScript 引擎提供了 document，JavaScript 引擎还提供了发出异步 HTTP 请求的方式。我们通过 XMLHttpRequest 对象发出异步请求。我们可以使用提供的 XMLHttpRequest 构造函数创建这些对象。</li>
+<li>请转到<a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a> 并打开开发者工具，然后在控制台上运行以下命令<code>const asyncRequestObject = new XMLHttpRequest(); //构建XHR对象</code></li>
+<li>令人困惑的是，构造函数具有”XML”，但是它不限于 XML 文档。注意，”AJAX”的全称是”异步 JavaScript 和 XML （Asynchronous JavaScript and XML）”。因为最初进行异步数据交换的主要文件格式是 XML 文件，因此该函数称为 XMLHttpRequest！</li>
+<li>XMLHttpRequest（通常缩写为 XHR 或 xhr）可以用来向 API 请求任何类型的文件（例如 txt 纯文本文件、HTML 文件、JSON 文件、图片文件等）或数据。</li>
+<li><a href="https://www.w3.org/TR/XMLHttpRequest/" target="_blank" rel="noopener">XHR的W3C规范</a></li>
+</ul>
+</li>
+<li><p>XHR的.open()方法</p>
+<ul>
+<li>我们构建了一个叫做 asyncRequestObject 的 XHR 对象。我们可以使用多种方法。最重要的一个方法是 open 方法<code>asyncRequestObject.open();</code></li>
+<li>.open() 具有多个参数，但是最重要的参数是前两个参数<ul>
+<li>HTTP 方法</li>
+<li>要发送请求的 URL</li>
+</ul>
+</li>
+<li>如果我们要向热门高分辨率图片网站 <a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a> 发出首页异步请求，我们需要使用 GET 请求并提供相关 URL:<code>asyncRequestObject.open(&#39;GET&#39;, &#39;https://unsplash.com&#39;);</code></li>
+<li><p>警告：出于安全原因，你只能在将加载数据的同一网域中发出资源和数据请求。例如，要向 google.com 发出异步数据请求，浏览器需要位于 google.com 上。这称为<a href="https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy" target="_blank" rel="noopener">同源策略</a>。这一限制似乎太严格了，的确是！</p>
+</li>
+<li><p>这一限制的原因是 JavaScript 对网页上的太多信息具有控制权。它可以访问所有的 Cookie，并且能够判断密码，因为它可以追踪用户按的是哪个键。但是，如果所有信息都只限定在一个位置，网络就不会有今天的发展壮大了。规避相同来源策略的方式是使用 CORS (Cross-Origin Resource Sharing)。<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">CORS</a> 是必须在服务器上实现的技术。提供 API 的服务使用 CORS 让开发者能够规避相同来源策略并访问这些服务器上的信息。</p>
+</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/open" target="_blank" rel="noopener">.open()方法说明</a></li>
+</ul>
+</li>
+<li><p>XHR的.send()方法</p>
+<ul>
+<li>要实际地发送请求，我们需要使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/send" target="_blank" rel="noopener">send 方法</a>：</li>
+<li><code>asyncRequestObject.send();</code></li>
+<li>在<a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a>在打开开发者工具看看发生了什么</li>
+<li><p>可以看到页面上并有什么反应<img src="http://p1z5x0ead.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%2016.43.45.png" alt="屏幕快照 2018-02-05 16.43.45"></p>
+</li>
+<li><p>可以选择请求，并且预览请求，可以看到返回了一些HTML<img src="http://p1z5x0ead.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%2016.44.06.png" alt="屏幕快照 2018-02-05 16.44.06"></p>
+</li>
+<li>如果发出请求，然后什么也不做，则毫无意义</li>
+<li><p>要处理 XHR 请求的成功响应，我们将对象上的 <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequestEventTarget/onload" target="_blank" rel="noopener">onload</a> 属性设为将处理它的函数<br>​      </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">         function handleSuccess() &#123;</span><br><span class="line">    // in the function, the `this` value is the XHR object</span><br><span class="line">    // this.responseText holds the response from the server</span><br><span class="line">    console.log(this.responseText); // the HTML of https://unsplash.com/</span><br><span class="line">&#125;</span><br><span class="line">asyncRequestObject.onload = handleSuccess;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>正如我们所看到的，如果未设置 onload，则请求的确会返回，但是它什么也不会发生。</p>
+</li>
+<li>处理错误<ul>
+<li>你可能已经知道，如果请求成功，则调用 onload。如果请求出现问题，无法实现请求，则我们需要使用 onerror 属性：</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>        ​<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">            function handleError () &#123;</span><br><span class="line">            // in the function, the `this` value is the XHR object</span><br><span class="line">    console.log( &apos;An error occurred 😞&apos; );&#125;</span><br><span class="line">asyncRequestObject.onerror = handleError;</span><br><span class="line">            ​</span><br></pre></td></tr></table></figure>
+
+- 和 onload 一样，如果 onerror 未设置，并且出现错误，则该错误将继续发生，但是没有任何提示，你的代码（以及用户）将不知道发生了什么问题，也不知道如何恢复
+</code></pre><ol>
+<li>完整请求<ul>
+<li>以下是创建 XHR 对象的完整代码，告诉该对象要请求什么信息，设置成功或错误处理程序，然后实际地发送请求：</li>
+</ul>
+</li>
+</ol>
+<pre><code>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">    function handleSuccess () &#123; </span><br><span class="line">    console.log( this.responseText ); </span><br><span class="line">// the HTML of https://unsplash.com/&#125;</span><br><span class="line">function handleError () &#123; </span><br><span class="line">    console.log( &apos;An error occurred \uD83D\uDE1E&apos; );</span><br><span class="line">&#125;</span><br><span class="line">const asyncRequestObject = new XMLHttpRequest();</span><br><span class="line">asyncRequestObject.open(&apos;GET&apos;, &apos;https://unsplash.com&apos;);</span><br><span class="line">asyncRequestObject.onload = handleSuccess;</span><br><span class="line">asyncRequestObject.onerror = handleError;</span><br><span class="line">asyncRequestObject.send();</span><br></pre></td></tr></table></figure>
+
+- API 和 JSON
+    - 你可以获得网站的 HTML，但是可能不太实用。它返回的数据格式难以解析。如果我们希望获得的数据是能轻松解析的数据结构，那就很棒了。如果你觉得 JSON 很不错，那么你猜对了！
+    - 在向 API 发出请求并返回 JSON 时，我们只需将该 JSON 响应转换为 JavaScript 对象。为此，我们可以使用 JSON.parse();。我们可以修改下 onload 函数以处理 JSON 响应
+
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function handleSuccess () &#123;</span><br><span class="line">    const data = JSON.parse( this.responseText ); // convert data from JSON to a JavaScript object</span><br><span class="line">    console.log( data );</span><br><span class="line">    &#125;</span><br><span class="line">    asyncRequestObject.onload = handleSuccess;</span><br></pre></td></tr></table></figure>
+
+- 设置请求头
+    - 要在请求中包含标头，我们将使用 XHR 方法 setRequestHeader。完整代码必须为：
+
+
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">    const searchedForText = &apos;hippos&apos;;</span><br><span class="line">        const unsplashRequest = new XMLHttpRequest();</span><br><span class="line">        </span><br><span class="line">        unsplashRequest.open(&apos;GET&apos;, `https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`);</span><br><span class="line">        unsplashRequest.onload = addImage;</span><br><span class="line">        unsplashRequest.setRequestHeader(&apos;Authorization&apos;, &apos;Client-ID &lt;your-client-id&gt;&apos;);</span><br><span class="line">        unsplashRequest.send();</span><br><span class="line">        </span><br><span class="line">        function addImage()&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><ol>
+<li><p>项目初始结构介绍</p>
+<ul>
+<li>创建账号<ul>
+<li>要完成最后这些步骤，你需要创建 Unsplash 和《纽约时报》帐户。</li>
+</ul>
+</li>
+<li><p>Unsplash</p>
+<ul>
+<li>在以下网页上创建开发者帐户 - <a href="https://unsplash.com/developers" target="_blank" rel="noopener">https://unsplash.com/developers</a></li>
+<li>接着，在以下网页上创建应用 - <a href="https://unsplash.com/oauth/applications" target="_blank" rel="noopener">https://unsplash.com/oauth/applications</a></li>
+<li>这样就会获得发出请求需要用到的“应用 ID”</li>
+</ul>
+</li>
+<li><p>《纽约时报》</p>
+<ul>
+<li>在以下网页上创建帐户 - <a href="https://developer.nytimes.com/" target="_blank" rel="noopener">https://developer.nytimes.com/</a></li>
+<li>他们将通过电子邮件的形式向你发送 API 密钥（发出请求时，你需要使用该密钥）</li>
+</ul>
+</li>
+<li><p>Unsplash 请求</p>
+<ul>
+<li>在我们的应用中，变量 searchedForText 包含我们想要的文本，我们会将 onload 属性设为一个函数，叫做 addImage（该函数什么也不做，我们稍后会讲解）。如果我们暂时将 searchedForText 设为”hippos”，对 Unsplash 的 XHR 调用代码将为：</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function addImage()&#123;&#125;</span><br><span class="line">const searchedForText = &apos;hippos&apos;;</span><br><span class="line">const unsplashRequest = new XMLHttpRequest();</span><br><span class="line">unsplashRequest.open(&apos;GET&apos;, `https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`);</span><br><span class="line">unsplashRequest.onload = addImage;</span><br><span class="line">unsplashRequest.send()</span><br></pre></td></tr></table></figure>
+
+- 但是如果你尝试运行该代码，将遇到错误
+- Unsplash 请求不可行，因为它需要一并发送 HTTP 标头。我们应该使用什么 XHR 函数来向请求中添加标头？请参阅此[文档](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest)以获取帮助
+</code></pre><ol>
+<li><p>设置请求标头</p>
+<ul>
+<li><p>要在请求中包含标头，我们将使用 XHR 方法 setRequestHeader。完整代码必须为：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const searchedForText = &apos;hippos&apos;;</span><br><span class="line">const unsplashRequest = new XMLHttpRequest();</span><br><span class="line">unsplashRequest.open(&apos;GET&apos;, `https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`);</span><br><span class="line">unsplashRequest.onload = addImage;</span><br><span class="line">unsplashRequest.setRequestHeader(&apos;Authorization&apos;, &apos;Client-ID &lt;your-client-id&gt;&apos;);</span><br><span class="line">unsplashRequest.send();</span><br><span class="line">function addImage()&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  我们在函数里添加<code>debugger</code>，这时候刷新页面，函数就会暂停，这个值就是XHR对象本身，这个值被存储在响应文本中。这是个Json响应，并显示所有文本。<img src="http://p1z5x0ead.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%2021.23.07.png" alt="屏幕快照 2018-02-05 21.23.07"></p>
+</li>
+<li><p>因为《纽约时报》不需要具体的标头，因此我们不需要进行任何特殊设置。我们将其 onload 属性设为函数addArticles，稍后我们将介绍该函数：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function addArticles () &#123;&#125;</span><br><span class="line">const articleRequest = new XMLHttpRequest();</span><br><span class="line">articleRequest.onload = addArticles;</span><br><span class="line">articleRequest.open(&apos;GET&apos;, `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=$&#123;searchedForText&#125;&amp;api-key=&lt;your-API-key-goes-here&gt;`);</span><br><span class="line">articleRequest.send();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>确保在上述 URL 中填上你在注册开发者帐户时，通过电子邮件收到的《纽约时报》API 密钥</p>
+</li>
+</ul>
+</li>
+<li><p>XHR用法总结</p>
+<ul>
+<li>你需要完成多个步骤，才能在 JavaScript 中发出异步 HTTP 请求。</li>
+<li>要发出异步请求<ul>
+<li>使用 XMLHttpRequest 构造函数创建 XHR 对象</li>
+<li>使用 .open() 方法 - 设置 HTTP 方法和要获取的资源的 URL</li>
+<li>设置 .onload 属性 - 将此属性设为成功获取数据后将运行的函数</li>
+<li>设置 .onerror 属性 - 将此属性设为出现错误后将运行的函数</li>
+<li>使用 .send() 方法 - 发送请求</li>
+</ul>
+</li>
+<li>要使用响应<ul>
+<li>使用 .responseText 属性 - 存储异步请求响应的文本</li>
+</ul>
+</li>
+<li><p>注意：原始 XHR 规范创建于 2006 年。这是第一版规范。多年后，该规范出现了小小的改动。</p>
+</li>
+<li><p>在 2012 年，第二版 XHR 规范开始得以创建。在 2014 年，XHR2 规范与 XHR1 规范进行合并，这样就不存在有分歧的标准。依然有一些 XHR2 参考，但是 XHR 规范现在完全包含 XHR2。</p>
+</li>
+<li>请参阅这篇 HTML5Rocks 文章，了解现在包含在 XHR 规范中的 <a href="https://www.html5rocks.com/en/tutorials/file/xhr2/" target="_blank" rel="noopener">XHR2</a> 中的新技巧。</li>
+</ul>
+</li>
+</ol>
+<p>##3.Ajax与jQuery</p>
+<ol>
+<li><p>jQuery库和Ajax</p>
+<ul>
+<li><p>jQuery 是一个非常热门的 JavaScript 库，提供了大量可以开箱即用的功能。它是在很多年前创建的，当时浏览器没有联合起来形成标准化功能。jQuery 通过提供统一的接口，使开发者能够轻松地构建需要在所有大型浏览器上都能正常运转的网站。开发者会使用特定于 jQuery 的函数，然后 jQuery 会根据正在使用的浏览器判断该运行什么代码。</p>
+</li>
+<li><p>jQuery 只是 JavaScript，因此你需要下载<a href="https://code.jquery.com/" target="_blank" rel="noopener">当前版本</a>并使用普通的 <code>&lt;script&gt;</code> 标记关联它。在网页上包含它后，你就能利用它的强大功能了</p>
+</li>
+<li><p>现在，浏览器基本都遵守相同的标准，jQuery 没有以前那么实用了。但是，它提供了一个非常强大的工具，也就是其 ajax() 方法</p>
+</li>
+<li><p>顾名思义，jQuery 的 ajax()方法用来处理所有的异步请求</p>
+</li>
+</ul>
+</li>
+<li><p>jQuery的’ajax()’方法</p>
+<ul>
+<li><p>.ajax() 方法 是整个 jQuery 库的异步请求的核心。你可以通过多种方式来调用 <a href="http://api.jquery.com/jquery.ajax/" target="_blank" rel="noopener">.ajax()</a> 方法</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$.ajax(&lt;url-to-fetch&gt;, &lt;a-configuration-object&gt;);</span><br><span class="line"></span><br><span class="line">// or </span><br><span class="line"></span><br><span class="line">$.ajax(&lt;just a configuration object&gt;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- .ajax() 方法的最常用使用方式是使用配置对象，因为可以在配置对象中设置一切。</span><br><span class="line">- 什么是”配置对象”？</span><br><span class="line">    - 配置对象是一个用来配置方法的普通 JavaScript 对象。例如</span><br></pre></td></tr></table></figure>
+<pre><code>var settings = {
+   frosting: &apos;buttercream&apos;,
+   colors: [&apos;orange&apos;, &apos;blue&apos;],
+   layers: 2,
+   isRound: true
+};
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">the settings configuration object can be used in the imaginary MakeCake constructor function:</span><br><span class="line"></span><br><span class="line">`const myDeliciousCake = MakeCake( settings );`</span><br><span class="line"></span><br><span class="line">Alternatively, the settings object could be passed in directly:</span><br></pre></td></tr></table></figure>
+
+const myDeliciousCake = MakeCake({
+   frosting: &apos;buttercream&apos;,
+   colors: [&apos;orange&apos;, &apos;blue&apos;],
+   layers: 2,
+   isRound: true
+});
+
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 进行 Ajax 调用</span><br><span class="line">    - 如果 jQuery 的 .ajax() 方法要支撑所有 jQuery 异步请求，则必须非常强大。以下是简单的 Ajax 请求：</span><br><span class="line">      ​</span><br></pre></td></tr></table></figure>
+
+$.ajax({
+    url: &apos;http://swapi.co/api/people/1/&apos;
+});
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">        - 我们测试下！</span><br><span class="line">            - 转到 [jQuery](http://jquery.com/) 网站</span><br><span class="line">            - 打开浏览器的开发者工具</span><br><span class="line">            - 确保记录网络流量</span><br><span class="line">            - 在 Chrome 中，转到“网络”面板</span><br><span class="line">            - 向控制台中添加上述请求</span><br><span class="line">            - ...运行代码！</span><br><span class="line">            - 我们使用.ajax发出了请求，但是没有处理响应![屏幕快照 2018-02-05 17.52.16](http://p1z5x0ead.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-02-05%2017.52.16.png)</span><br><span class="line"></span><br><span class="line">3. 处理返回的数据</span><br><span class="line">    - 在设置 XHR 对象时，响应由一个函数处理的，.ajax() 方法也一样。我们可以使用 .done() 方法链接到 .ajax()。我们向 .done() 方法传入一个当 Ajax 调用完成时将运行的函数！</span><br></pre></td></tr></table></figure>
+</code></pre></li>
+</ul>
+</li>
+</ol>
+<pre><code>    function handleResponse(data) {
+        console.log(&apos;the ajax request has finished!&apos;);
+        console.log(data);
+    }
+    $.ajax({
+        url: &apos;http://swapi.co/api/people/1/&apos;
+    }).done(handleResponse);
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 很多信息都是由 jQuery 在后台处理的，以下是转换的第一步：</span><br></pre></td></tr></table></figure>
+
+
+    $.ajax({
+url: `https://api.unsplash.com/search/photos?page=1&amp;query=${searchedForText}`
+</code></pre><p>}).done(addImage);<br>        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    - 对于 jQuery 代码：</span><br><span class="line">        - 我们不需要创建 XHR 对象</span><br><span class="line">        - 我们不用指定请求是 GET 请求，而是默认地就是该请求，我们只需提供要请求的资源对应的 URL</span><br><span class="line">        - 我们使用 .done() 方法，而不是设置 onload</span><br><span class="line"></span><br><span class="line">4. 处理成功的回调</span><br><span class="line">    - 内容没有添加到 jQuery 检测到响应的网页上，如果是 JSON，将自动将其转换为 JavaScript。多棒啊！我们只需对现有代码稍加修改。代码目前为</span><br></pre></td></tr></table></figure></p>
+<pre><code>    function addImage() {
+const data = JSON.parse(this.responseText);
+const firstImage = data.results[0];
+responseContainer.insertAdjacentHTML(&apos;afterbegin&apos;, `&lt;figure&gt;
+        &lt;img src=&quot;${firstImage.urls.small}&quot; alt=&quot;${searchedForText}&quot;&gt;
+        &lt;figcaption&gt;${searchedForText} by ${firstImage.user.name}&lt;/figcaption&gt;
+    &lt;/figure&gt;`
+);
+</code></pre><p>}<br>        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我们只需要修改前三行</span><br></pre></td></tr></table></figure></p>
+<pre><code>    function addImage(images) {
+const firstImage = images.results[0];
+responseContainer.insertAdjacentHTML(&apos;afterbegin&apos;, `&lt;figure&gt;
+        &lt;img src=&quot;${firstImage.urls.small}&quot; alt=&quot;${searchedForText}&quot;&gt;
+        &lt;figcaption&gt;${searchedForText} by ${firstImage.user.name}&lt;/figcaption&gt;
+    &lt;/figure&gt;`
+);
+</code></pre><p>}<br>        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">        </span><br><span class="line">    - 更改</span><br><span class="line">        - 函数现在有一个参数 images</span><br><span class="line">        - 该参数已经从 JSON 转换为 JavaScript 对象, 因此*具有 JSON.parse() 的行不再需要</span><br><span class="line">        - firstImage 变量设为 images.results 的第一项</span><br><span class="line"></span><br><span class="line">5. 代码讲解</span><br><span class="line">    - 如果使用 jQuery 的 .ajax() 方法，则需要管理的设置代码更少。这很好，但是要使用 jQuery，我们还需要包含整个库，并强制用户每次都下载整个库</span><br><span class="line">    - 他们是有可能缓存了库，但是我们真的需要 jQuery 吗？它有什么特殊作用吗？</span><br><span class="line"></span><br><span class="line">6. 查看$.ajax()的源代码</span><br><span class="line">    - 我们将查看 jQuery 的源代码。为此，你需要：</span><br><span class="line">        - 在浏览器中打开项目</span><br><span class="line">        - 打开开发者工具</span><br><span class="line">        - 切换到“源代码”面板</span><br><span class="line">        - 打开 jquery.js 文件</span><br><span class="line">            - 在 Chrome 中，你可以通过使用 ctrl/command + P 搜索特定文件，然后打开该文件</span><br><span class="line"></span><br><span class="line">        - 在第 9036 行设置断点</span><br><span class="line"></span><br><span class="line">    - 搜索某个内容</span><br><span class="line">       - 我们已经添加了断点，如果进行搜索的话，JavaScript 代码将运行（并使用 jQuery 的 .ajax() 方法！），并且开发者工具在遇到断点所在行时将暂停。请搜索内容，使代码在断点位置暂停。不妨搜索有趣的内容，例如&quot;Volcanoes”！</span><br><span class="line"></span><br><span class="line">    - 在chrome中进行调试</span><br><span class="line">        - 如果你从未调试过 JavaScript 应用，那么这一流程看起来会比较复杂。我们将在这门课程中学习开发者工具的重要部分，如果你想深入学习这方面的知识，请参阅 Google 开发者网站上的以下资源：</span><br><span class="line">        - [使用断点暂停代码](https://developers.google.com/web/tools/chrome-devtools/javascript/breakpoints)</span><br><span class="line">        - [JavaScript 调试参考](https://developers.google.com/web/tools/chrome-devtools/javascript/reference) </span><br><span class="line">7. 查看调用堆栈</span><br><span class="line">    - 开发者工具可以提供大量实用的信息！如果你不熟悉这些功能，强烈建议你学习所有这些功能，这样将使网站开发和调试过程轻松很多！开发者工具提供的一个实用信息是 JavaScript 调用堆栈。调用堆栈显示了不断进行的函数调用顺序。堆栈底部的函数是第一个运行的函数。它会调用堆栈上的第二个函数…第二个函数调用第三个函数，以此类推。函数一直保留在堆栈上，直到前面的函数返回了。</span><br><span class="line"></span><br><span class="line">    - 我们可以点击堆栈中的底部函数（匿名函数），查看发起堆栈调用的针对 Unsplash 图片的 $.ajax() 调用。该 $.ajax() 调用反过来调用 transport.send()，后者调用 options.xhr()，接着调用新的 XMLHttpRequest() 对象！</span><br><span class="line"></span><br><span class="line">    - 顺序是：</span><br><span class="line">        - 匿名函数中的代码调用 `.ajax()`</span><br><span class="line">        - `.ajax()` 调用 `.send()` 方法</span><br><span class="line">        - `.send()` 调用 `options.xhr()`</span><br><span class="line">        - `options.xhr()` 调用 `jQuery.ajaxSettings.xhr`，并创建新的 XHR 对象</span><br><span class="line"></span><br><span class="line">8. JQuery的其他异步方法</span><br><span class="line">    - jQuery 具有很多其他可用来发出异步调用的方法。这些方法是</span><br><span class="line">        - get()</span><br><span class="line">        - getJson()</span><br><span class="line">        - getScript()</span><br><span class="line">        - post()</span><br><span class="line">        - load()</span><br><span class="line">    - 你应该使用哪个方法</span><br><span class="line">        - 通常，最好使用 $.ajax() 方法，而不是 jQuery 提供的便利方法。</span><br><span class="line">        </span><br><span class="line">##4.Ajax与Fetch</span><br><span class="line"></span><br><span class="line">1. 什么是Fetch</span><br><span class="line">    -  Fetch 是发出网络请求的新方式！在看了设置 XMLHttpRequest 要进行的所有手动设置过程后，你可能觉得（反正我是觉得）发出简单的请求却需要很复杂的步骤。如果我只想从 Unsplash 获取一张照片，为何要甚至在发出请求前进行所有这些设置？我只需一个图片文件，因此我只想请求该文件，而不用关心没必要考虑的复杂的 XHR 规范的各个细节部分。</span><br><span class="line">    -  Fetch 是一个新的 API，旨在让资源请求（通常是网络请求）简单很多。新的 Fetch API 比旧的 XHR 方式好很多的一个方面是 Fetch 基于 promise！</span><br><span class="line"></span><br><span class="line">    - 希望你已经意识到 Fetch 是未来发出请求的途径。我们来看看该 API！</span><br><span class="line">    </span><br><span class="line">    - Fetch 基于 Promise</span><br><span class="line">    </span><br><span class="line">2. 编写Fetch请求</span><br><span class="line">    - 我们来看一个简单的 fetch 请求，然后我们将发出一个 fetch 请求以从 Unsplash 获取图片。`fetch(&apos;&lt;URL-to-the-resource-that-is-being-requested&gt;&apos;);`</span><br><span class="line">    </span><br><span class="line">   - 就是这样，对于最简单的形式，Fetch 请求就是 fetch() 函数和要请求的资源对应的一个字符串。它非常简短，易于读懂（我觉得我已经喜欢上它了！）。我们来看看真正的请求看起来怎样`fetch(&apos;https://api.unsplash.com/search/photos?page=1&amp;query=flowers&apos;);`</span><br><span class="line">   - 如果你尝试在控制台上运行此 Fetch 请求，那么应该会返回一个 Promise。</span><br><span class="line"></span><br><span class="line">    - 跨域请求问题？</span><br><span class="line">        - 你是否运行了 Fetch 请求并且不可行？是在 Unsplash 网站上运行的吗？如果不是，确保转到 https://unsplash.com/，打开控制台，然后再尝试运行请求。</span><br><span class="line">        - 虽然 Fetch 是很强大的新 API，并且将替代 XHR 对象来进行异步网络请求，但是也必须遵守网络请求规则。Fetch 请求依然需要遵守关于共享资源的跨域协议。这意味着，默认情况下，你只能在将最终加载数据的同一网域中发出资源和数据请求。</span><br><span class="line">        - Unsplash 需要 Authorization 标头来通过其 API 发出请求。请访问以下 Fetch 文档连接，看看如何向 Fetch 请求添加 Authorization 标头</span><br><span class="line">            - https://developer.mozilla.org/zh-CN/docs/Web/API/GlobalFetch/fetch</span><br><span class="line">            - https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch</span><br><span class="line">            - https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API</span><br><span class="line"></span><br><span class="line">        - 更改HTTP方法</span><br><span class="line">            - Fetch 请求的默认 HTTP 方法是 GET 方法。我们可以通过在配置对象中传入 method 属性来选择不同的 HTTP 方法</span><br></pre></td></tr></table></figure></p>
+<pre><code>    fetch(`https://api.unsplash.com/search/photos?page=1&amp;query=${searchedForText}`, {
+    method: &apos;POST&apos;
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+- 这样将发送具有 POST HTTP 标头的请求
+- Fetch 的规范并没限制该使用什么 HTTP 方法，虽然该规范建议所有方法都大写，以便与 HTTP 动词规范保持一致
+</code></pre><ol>
+<li>处理响应<ul>
+<li>你已经学习了如何发出 Fetch 请求，并且发送了几个请求…但是什么也没发生，因为我们没有告诉代码要处理响应。我们让代码准备好处理响应吧。</li>
+<li>注意，Fetch 基于 Promise。这意味着，当我们发出 Fetch 请求时，它将自动返回一个可以用来监听响应的 promise。<ul>
+<li>因为 Fetch 请求会返回一个 Promise，所以你只需对该 Promise 调用 .then()。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">        </span><br><span class="line">        fetch(`https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`, &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">        Authorization: &apos;Client-ID abc123&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(function(response) &#123;</span><br><span class="line">    debugger; // work with the returned response</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+-  请将上述代码放入我们的 JavaScript 文件中并搜索某个内容。因为我们在 .then() 函数中添加了 debugger 行，因此当最后返回响应时，代码将在 debugger 行暂停
+</code></pre><ol>
+<li><p>Response 对象</p>
+<ul>
+<li>看到返回的响应是 Response 类型了吗？这种 Response 对象是 Fetch API 的新功能，当 Fetch 请求 resolve 时就会返回该对象。</li>
+<li>这很棒，但是你注意到 Response 对象有什么奇怪的地方吗？它没有我们搜索的任何数据！这是因为 Response 对象具有关于响应本身的信息，但是尚无数据…要实际地获取数据，我们需要获取响应的“主体”</li>
+<li><p>因为我们使用的 Unsplash API 将返回 JSON，我们需要对 response 变量调用 .json()。<br>​          </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    </span><br><span class="line">    fetch(`https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`, &#123;</span><br><span class="line">headers: &#123;</span><br><span class="line">    Authorization: &apos;Client-ID abc123&apos;</span><br><span class="line">&#125;</span><br><span class="line">&#125;).then(function(response) &#123;</span><br><span class="line">return response.json();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Response 对象上的 .json() 方法返回一个 Promise，因此我们需要链接另一个 .then() 以实际地获取并开始使用返回的数据。这次，我们调用 addImage 以向其传递返回的数据：</p>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">fetch(`https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`, &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">        Authorization: &apos;Client-ID abc123&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(function(response) &#123;</span><br><span class="line">    return response.json();</span><br><span class="line">&#125;).then(addImage);</span><br><span class="line"></span><br><span class="line">function addImage(data) &#123;</span><br><span class="line">    debugger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- Response 对象上有多个方法。每个方法都使代码能处理不同类型的响应。</span><br></pre></td></tr></table></figure>
+</code></pre><ol>
+<li><p>ES6箭头函数</p>
+<ul>
+<li><p>你可能会觉得这个 Fetch 请求似乎有太多的代码…的确是这样。减少代码的一种简便方式是使用 ES6 箭头函数！我们可以使用箭头函数将第一个获得响应的 .then() 函数、对其调用 .json() 方法并返回 Promise 全变成一行：<br>​        </p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">        </span><br><span class="line">        // without the arrow function</span><br><span class="line">&#125;).then(function(response) &#123;</span><br><span class="line">    return response.json();</span><br><span class="line">&#125;)</span><br><span class="line">// using the arrow function</span><br><span class="line">&#125;).then(response =&gt; response.json())</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新的请求将变成</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">        </span><br><span class="line">        fetch(`https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`, &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">        Authorization: &apos;Client-ID abc123&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(response =&gt; response.json())</span><br><span class="line">.then(addImage);</span><br><span class="line">function addImage(data) &#123;</span><br><span class="line">    debugger;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>显示内容并处理错误</p>
+<ul>
+<li><p>在网页上显示图片</p>
+<ul>
+<li><p>我们向 Unsplash 发出了请求，它返回了响应，然后我们将该响应转换为 JSON，现在我们看到了实际的 JSON 数据。太棒了！现在我们只需在网页上显示该图片和文字说明。<br>​      </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">        </span><br><span class="line">        function addImage(data) &#123;</span><br><span class="line">    let htmlContent = &apos;&apos;;</span><br><span class="line">    const firstImage = data.results[0];</span><br><span class="line">    if (firstImage) &#123;</span><br><span class="line">                htmlContent = `&lt;figure&gt;</span><br><span class="line">                    &lt;img src=&quot;$&#123;firstImage.urls.small&#125;&quot; alt=&quot;$&#123;searchedForText&#125;&quot;&gt;</span><br><span class="line">                    &lt;figcaption&gt;$&#123;searchedForText&#125; by $&#123;firstImage.user.name&#125;&lt;/figcaption&gt;</span><br><span class="line">                &lt;/figure&gt;`;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                htmlContent = &apos;Unfortunately, no image was returned for your search.&apos;</span><br><span class="line">            &#125;</span><br><span class="line">            responseContainer.insertAdjacentHTML(&apos;afterbegin&apos;, htmlContent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上述代码将</p>
+<ul>
+<li>获取从 Unsplash 返回的第一个图片</li>
+<li>使用小图片创建一个 <code>&lt;figure&gt;</code> 标记</li>
+<li>创建一个 <code>&lt;figcaption&gt;</code> 以显示搜索的文本和照片拍摄者的名字         </li>
+<li>如果没有返回图片，则向用户显示错误消息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<pre><code>- 处理错误
+    - 我们的应用已经几乎要完成从 Unsplash 获取图片的流程了！我们请求了图片并将其添加到网页中，但这只是一种可能的结果。当然，应用很有可能会出现这种结果，但是我们没有处理任何错误。可能会发生什么样的错误呢？我能想到的包括：
+        - 网络存在问题
+        - fetch 请求存在问题
+        - Unsplash 没有关于搜索字词的图片
+    - 我们在 addImage 函数中处理最后一个错误。对于另外两个错误，我们可以对 Fetch 请求链接 .catch() 方法！
+
+    - 因为 Fetch 请求会返回一个 Promise，因此我们可以使用 Promise API 的 .catch()。
+
+    - 我们添加一个 .catch() 方法以处理错误：
+
+    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">        fetch(`https://api.unsplash.com/search/photos?page=1&amp;query=$&#123;searchedForText&#125;`, &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">        Authorization: &apos;Client-ID abc123&apos;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(response =&gt; response.json())</span><br><span class="line">.then(addImage);</span><br><span class="line">.catch(e =&gt; requestError(e, &apos;image&apos;));</span><br><span class="line">function addImage(data) &#123;</span><br><span class="line">    debugger;</span><br><span class="line">&#125;</span><br><span class="line">function requestError(e, part) &#123;</span><br><span class="line">    console.log(e);</span><br><span class="line">    responseContainer.insertAdjacentHTML(&apos;beforeend&apos;, `&lt;p class=&quot;network-warning&quot;&gt;Oh no! There was an error making a request for the $&#123;part&#125;.&lt;/p&gt;`);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    - 上述代码添加了 requestError 函数并向 Promise 链的最后添加了 .catch() 请求。.catch() 函数将接收一个错误对象（我们将其存储在 e 变量中）并反过来调用 requestError，传入错误对象和失败的请求。如果 Promise 在任何地方拒绝了，则 requestError 函数将输出错误日志并向用户显示一条警告消息，指出请求因某种原因失败了。
+</code></pre>
+    </div>
+  </div>
+  <div class='switch-page'>
+    
+    
+  </div>
+</body>
+</html>
